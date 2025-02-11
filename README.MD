@@ -10,6 +10,7 @@ Utilizei a documentação e tutorial de projeto [disponível em aqui nesse link]
 ## Atualizações 🔁
 
 + 10/02/2025 - Criação do repositório. Criação da estrutura inicial que expõe a Entidade `Empregado.class`
++ 11/02/2025 - Atualização dos métodos de `EmpregadoController` para `public` para acessar fora do pacote. Criação do `EmpregadoModelAssembler` que converte `Empregado` pra um `EntityModel`, tipo usado pra criar os links, com o método `toModel()`. "Today is also my birthday! 🥳"
 
 
 ## Instalação ⚙️

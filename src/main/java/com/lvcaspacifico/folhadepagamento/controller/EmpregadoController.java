@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lvcaspacifico.folhadepagamento.exception.EmpregadoNaoEncontradoException;
 import com.lvcaspacifico.folhadepagamento.model.Empregado;
+import com.lvcaspacifico.folhadepagamento.model.EmpregadoModelAssembler;
 import com.lvcaspacifico.folhadepagamento.repository.EmpregadoRepository;
 
 
@@ -28,51 +29,45 @@ public class EmpregadoController {
 
     private final EmpregadoRepository empregadoRepository;
 
-    EmpregadoController(EmpregadoRepository empregadoRepository){
+    private final EmpregadoModelAssembler empregadoModelAssembler;
+
+    EmpregadoController(EmpregadoRepository empregadoRepository, EmpregadoModelAssembler empregadoModelAssembler){
         this.empregadoRepository = empregadoRepository;
+        this.empregadoModelAssembler = empregadoModelAssembler;
     }
     
     @GetMapping("/empregados/{id}")
-    EntityModel<Empregado> obterUmEmpregado(@PathVariable Long id){
+    public EntityModel<Empregado> obterUmEmpregado(@PathVariable Long id){
 
         Empregado empregado = empregadoRepository.findById(id)
         .orElseThrow(() -> new EmpregadoNaoEncontradoException(id));
 
-        return EntityModel.of(empregado,
-                              linkTo(methodOn(EmpregadoController.class).obterUmEmpregado(id)).withSelfRel(),
-                              linkTo(methodOn(EmpregadoController.class).obterTodosOsEmpregados()).withRel("empregados"));
-
+        return empregadoModelAssembler.toModel(empregado);
     }
 
     @GetMapping("/empregados")
-    CollectionModel<EntityModel<Empregado>> obterTodosOsEmpregados(){
+    public CollectionModel<EntityModel<Empregado>> obterTodosOsEmpregados(){
 
         List<EntityModel<Empregado>> empregados = empregadoRepository.findAll()
-                                                                     .stream()
-                                                                     .map(empregado -> EntityModel.of(empregado,
-                                                                          linkTo(methodOn(EmpregadoController.class)
-                                                                          .obterUmEmpregado(empregado.getId()))
-                                                                          .withSelfRel(),
-
-                                                                          linkTo(methodOn(EmpregadoController.class)
-                                                                          .obterTodosOsEmpregados())
-                                                                          .withRel("empregados")))
-                                                                          .collect(Collectors.toList());
-
+                                                .stream()
+                                                .map(empregadoModelAssembler::toModel)
+                                                .collect(Collectors.toList());
         return CollectionModel.of(empregados, 
-                                linkTo(methodOn(EmpregadoController.class).obterTodosOsEmpregados()).withSelfRel());
+                                linkTo(methodOn(EmpregadoController.class)
+                                .obterTodosOsEmpregados())
+                                .withSelfRel());
     }
 
     
 
     @PostMapping("/empregados")
-    Empregado criarNovoEmpregado(@RequestBody Empregado empregado){
+    public Empregado criarNovoEmpregado(@RequestBody Empregado empregado){
         return empregadoRepository.save(empregado);
     }
 
 
     @PutMapping("/empregados/{id}")
-    Empregado substituirEmpregado(@RequestBody Empregado novoEmpregado, @PathVariable Long id){
+    public Empregado substituirEmpregado(@RequestBody Empregado novoEmpregado, @PathVariable Long id){
         
         return empregadoRepository.findById(id).map(empregado -> {
             empregado.setNome(novoEmpregado.getNome());
@@ -83,7 +78,7 @@ public class EmpregadoController {
     }
 
     @DeleteMapping("/empregados/{id}")
-    void deletarEmpregado(@PathVariable Long id){
+    public void deletarEmpregado(@PathVariable Long id){
         empregadoRepository.deleteById(id);
     }
     
