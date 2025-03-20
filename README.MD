@@ -1,7 +1,7 @@
 
 # Folha de Pagamento | API RESTful com Spring + PostgreSQL 🎲🌿
 
-Nesse projeto de estudo eu construo um projeto simples para representar uma API de Folha de Pagamento 💸.
+Nesse projeto de estudo eu construo uma API RESTful (de verdade) para manter o cadastro de empregados e pedidos de produtos 💸.
 
 Ele é construído em Java 21 seguindo os padrões REST, e utilizando ferramentas do ecossistema Spring como Spring Boot e Spring HATEOAS. No banco de dados, utilzo o PostgreSQL 17.
 
