@@ -18,12 +18,12 @@ public class CarregarDados {
     CommandLineRunner iniciarBancoDeDados(EmpregadoRepository empregadoRepository){
 
         return args -> {
-            log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Jonathan Joestar", "Médico")));
-            log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Joseph Joestar", "Explorador")));   
-            log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Jotaro Kujo", "Biólogo")));
-            log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Josuke Higashikata", "Atleta")));
-            log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Giorno Giovana", "Empresário")));
-            log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Joline Kujo", "Exploradora")));
+            // log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Jonathan Joestar", "Médico")));
+            // log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Joseph Joestar", "Explorador")));   
+            // log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Jotaro Kujo", "Biólogo")));
+            // log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Josuke Higashikata", "Atleta")));
+            // log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Giorno Giovana", "Empresário")));
+            // log.info("Pré-carregar: " + empregadoRepository.save(new Empregado("Joline Kujo", "Exploradora")));
         };
     }
 }

@@ -12,13 +12,17 @@ public class Empregado {
     @Id @GeneratedValue
     private Long id;
 
+    private String primeiroNome;
+    private String sobrenome;
+
     private String nome;
     private String cargo;
 
     public Empregado() {}
 
-    public Empregado(String nome, String cargo){
-        this.nome = nome;
+    public Empregado(String primeiroNome, String sobrenome, String cargo){
+        this.primeiroNome = primeiroNome;
+        this.sobrenome = sobrenome;
         this.cargo = cargo;
     }
 
@@ -31,11 +35,13 @@ public class Empregado {
     }
 
     public String getNome() {
-        return nome;
+        return this.primeiroNome != null ? this.primeiroNome + " " + this.sobrenome : this.nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        String[] parts = nome.split(" ");
+        this.primeiroNome = parts[0];
+        this.sobrenome = parts[1];
     }
 
     public String getCargo() {
@@ -44,6 +50,23 @@ public class Empregado {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
+    }
+
+    
+    public String getPrimeiroNome() {
+        return this.primeiroNome != null ? this.primeiroNome : this.nome.split(" ")[0];
+    }
+
+    public void setPrimeiroNome(String primeiroNome) {
+        this.primeiroNome = primeiroNome;
+    }
+
+    public String getSobrenome() {
+        return this.sobrenome != null ? this.sobrenome : this.nome.split(" ")[0];
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
 
@@ -59,17 +82,20 @@ public class Empregado {
         // casting de o para tipo da classe
         Empregado empregado = (Empregado) o;
         // se o id e nome do objeto é igual ao da instância, é igual  
-        return Objects.equals(this.id, empregado.id) && Objects.equals(this.nome, empregado.nome);
+        return Objects.equals(this.id, empregado.id)
+             && Objects.equals(this.primeiroNome, empregado.primeiroNome)
+             && Objects.equals(this.sobrenome, empregado.sobrenome);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.nome, this.cargo);
+        return Objects.hash(this.id, this.primeiroNome, this.sobrenome, this.cargo);
     }
 
     @Override
     public String toString() {
-        return "Empregado{" + "id=" + this.id + ", nome='" + this.nome + '\'' + ", cargo='" + this.cargo + '\'' + '}';
+        return "Empregado{" + "id=" + this.id + ", nome='" + this.primeiroNome + '\'' + ", sobrenome='" + this.sobrenome + '\'' + ", cargo='" + this.cargo + '\'' + '}';
     }
+
     
 }
